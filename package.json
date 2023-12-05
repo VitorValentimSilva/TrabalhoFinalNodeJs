@@ -1,0 +1,26 @@
+{
+  "name": "trabalhofinalnodejs",
+  "version": "1.0.0",
+  "description": "Trabalho final de uma mataria da faculdade utilizando NodeJs",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/VitorValentimSilva/TrabalhoFinalNodeJs.git)"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Vitor Valentim",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "date-fns": "^2.30.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3"
+  }
+}

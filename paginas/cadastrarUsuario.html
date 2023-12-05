@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastrar Usuários</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Preencha o formulário abaixo!</h1>
+  </header>
+
+  <main>
+    <form action="/listaUsuarios" method="post">
+      <label for="inome">Nome: </label>
+      <input type="text" name="nome" id="inome" placeholder="Digite o seu nome."><br>
+      
+      <label for="iemail">Email: </label>
+      <input type="email" name="email" id="iemail" placeholder="Digite o seu email."><br>
+
+      <label for="idata">Data de Nascimento: </label>
+      <input type="date" name="data" id="idata"><br>
+
+      <label for="inick">Nickname: </label>
+      <input type="text" name="nick" id="inick" placeholder="Digite um nickname."><br>
+
+      <label for="isenha">Senha: </label>
+      <input type="password" name="senha" id="isenha" placeholder="Digite uma senha."><br>
+
+      <button type="submit">Criar</button>
+    </form>
+  </main>
+</body>
+</html>
