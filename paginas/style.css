@@ -42,6 +42,7 @@ input{
 }
 
 button{
+  cursor: pointer;
   font-size: 16px;
   background-color: rgb(108, 163, 52);
   font-weight: bold;

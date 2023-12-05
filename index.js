@@ -152,9 +152,49 @@ function listaDeUsuarios(requisicao, resposta){
   }
 }
 
-app.post('/listaUsuarios', listaDeUsuarios)
+function autenticar(requisicao, resposta, next){
+  if(requisicao.session.usuarioAutenticado){
+    next()
+  }
+  else{
+    resposta.redirect("/login.html")
+  }
+}
 
-app.get('/', (requisicao, resposta) => {
+app.post('/login', (requisicao, resposta) => {
+  const usuario = requisicao.body.usuario
+  const senha = requisicao.body.senha
+
+  if(usuario && senha && (usuario == "vitor") && (senha == "123")){
+    requisicao.session.usuarioAutenticado = true
+    resposta.redirect('/')
+  }
+  else{
+    resposta.end(`
+      <!DOCTYPE html>
+      <html lang="pt-br">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Invalido</title>
+        <link rel="stylesheet" href="style.css">
+      </head>
+      <body>
+        <header>
+          <h1>Usuario ou senha invalido!</h1>
+        </header>
+        <main>
+          <a href="/login.html">Voltar ao login.</a>
+        </main>
+      </body>
+      </html>
+    `)
+  }
+})
+
+app.post('/listaUsuarios', autenticar, listaDeUsuarios)
+
+app.get('/', autenticar, (requisicao, resposta) => {
   const ultimoAcesso = requisicao.cookies.DataUltimoAcesso
   const data = new Date()
 
