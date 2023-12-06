@@ -14,7 +14,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: 1000 * 60 * 15
+    maxAge: 1000 * 60 * 30
   }
 }))
 
@@ -192,6 +192,82 @@ app.post('/login', (requisicao, resposta) => {
   }
 })
 
+var mensagens = []
+
+app.get('/batePapo', autenticar, (requisicao, resposta) => {
+  const dadosMensagem = requisicao.query
+  let conteudo = ''
+  const data = new Date()
+
+  resposta.cookie("horarioDeEnvio", data.toLocaleString(), {
+    maxAge: 1000 * 60 * 60 * 24 * 30,
+    httpOnly: true
+  })
+
+  const horaDaMensaegm = requisicao.cookies.horarioDeEnvio
+
+  if(dadosMensagem.sms && dadosMensagem.sms.trim() !== '' && dadosMensagem.OpcaoUsuario) {
+    const SMS = { 
+      men: dadosMensagem.sms, 
+      usu: dadosMensagem.OpcaoUsuario
+    }
+    mensagens.push(SMS)
+  }
+
+  conteudo = `
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Bate-Papo</title> 
+      <link rel="stylesheet" href="style3.css"> 
+    </head>
+    <body>
+      <header>
+        <h1>Bate-Papo</h1>
+      </header>
+      
+      <main>
+        <div> `
+
+  for(let i = 0; i < mensagens.length; i++){
+    conteudo += `
+          <h3>${mensagens[i].usu}: </h3>
+          <p>${mensagens[i].men} <br><br> Postado em: ${horaDaMensaegm}</p><br>`
+  }
+
+  conteudo += `
+        </div>
+    
+        <form action="/batePapo" method="get">
+          <h2>Enviar Mensagem: </h2>
+    
+          <label for="iusuario">Usuário: </label>
+          <select name="OpcaoUsuario" id="iopc"> `
+
+  for(let i = 0; i < listaUsuario.length; i++){
+    conteudo += `
+            <option value="${listaUsuario[i].nick}">${listaUsuario[i].nick}</option> `
+  }
+
+  conteudo += `
+          </select><br>
+
+          <label for="isms">Mensaegm: </label>
+          <input type="text" name="sms" id="isms">
+
+          <button type="submit">Enviar</button>
+        </form>
+
+        <a href="/">Voltar ao menu</a>
+      </main>
+    </body>
+    </html>
+  `
+  resposta.end(conteudo)
+})
+
 app.post('/listaUsuarios', autenticar, listaDeUsuarios)
 
 app.get('/', autenticar, (requisicao, resposta) => {
@@ -221,7 +297,7 @@ app.get('/', autenticar, (requisicao, resposta) => {
         <div>
           <ul>
             <li><a href="cadastrarUsuario.html">Cadastrar Usuario</a></li>
-            <li><a href="#">Bate-papo</a></li>
+            <li><a href="/batePapo">Bate-papo</a></li>
           </ul>
 
           <p>O último acesso foi ${ultimoAcesso}.</p>
