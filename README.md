@@ -18,7 +18,7 @@ O projeto consiste em um sistema web de bate-papo, com as seguintes funcionalida
 - **Express:** Utilizamos o framework Express para facilitar a criação de rotas e a construção do servidor web.
 - **Cookie-parser:** Para rastrear o último acesso ao sistema.
 - **Express-session:** Para rastrear o envio de mensagens e mostrar a data/hora de cada mensagem.
-- **date-fns:** Utilizado para a formatação de datas no formato brasileiro (dia/mês/ano).
+- **Date-fns:** Utilizado para a formatação de datas no formato brasileiro (dia/mês/ano).
 
 ## Como Executar o Projeto Localmente
 
